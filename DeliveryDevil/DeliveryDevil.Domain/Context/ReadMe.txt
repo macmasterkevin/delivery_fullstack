@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS;Database=DeliveryDevil;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models --context-dir Context --force
