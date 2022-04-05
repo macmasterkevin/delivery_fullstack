@@ -10,7 +10,7 @@ namespace DeliveryDevil.Service
         public Task<Order> Create(Order order);
         public Task<Order> Update(Order order);
         public Task Complete(int orderId, bool didTip);
-        public Task<List<Order>> GetHistory(int customerId, bool orderByRecent);
+        public Task<List<Order>> GetHistory(int customerId, bool orderByRecent, int pageNumber, int pageSize);
         Task Delete(int orderId);
     }
 }

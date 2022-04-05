@@ -38,7 +38,7 @@ namespace DeliveryDevil.Service
                 .Paginate(_paging).ToListAsync();
         }
 
-        public Task<List<Order>> GetHistory(int customerId, bool orderByRecent)
+        public Task<List<Order>> GetHistory(int customerId, bool orderByRecent, int pageNumber, int pageSize)
         {
             var query = Orders()
                 .Where(x => x.CustomerId == customerId);

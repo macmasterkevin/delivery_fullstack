@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DeliveryDevil.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/details")]
 public class OrderController : Controller
 {
     private readonly IOrderService _service;
@@ -24,7 +24,7 @@ public class OrderController : Controller
         return order != null ? Json(order.FromDomain()) : NotFound();
     }
 
-    [HttpGet]
+    [HttpGet("getallorders")]
     public async Task<IActionResult> GetAll()
     {
         var orders = await _service.GetAll();
@@ -39,7 +39,7 @@ public class OrderController : Controller
         return Json(createdOrder);
     }
 
-    [HttpPut]
+    [HttpPost]
     public async Task<IActionResult> Update([FromBody]OrderDto order)
     {
         if ((order?.OrderId ?? 0) <= 0) return BadRequest("No order given");
@@ -55,10 +55,10 @@ public class OrderController : Controller
         return Ok();
     }
 
-    [HttpGet("history/{customerId}")]
-    public async Task<IActionResult> GetHistory(int customerId, [FromQuery]bool orderByRecent)
+    [HttpPost("history/{customerId}")]
+    public async Task<IActionResult> GetHistory(int customerId, [FromBody]bool orderByRecent, [FromBody]int pageNumber, [FromBody]int pageSize)
     {
-        var orders = await _service.GetHistory(customerId, orderByRecent);
+        var orders = await _service.GetHistory(customerId, orderByRecent, pageNumber, pageSize);
         if (!orders?.Any() ?? true) return NotFound();
         return Json(orders.Select(o => o.FromDomain()));
     }
